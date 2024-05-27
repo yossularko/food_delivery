@@ -44,7 +44,10 @@ class MyCurrentLocation extends StatelessWidget {
                   "Jl. H. Ganeng No 46",
                   style: TextStyle(color: colorScheme.inversePrimary),
                 ),
-                const Icon(Icons.keyboard_arrow_down_rounded)
+                Icon(
+                  Icons.keyboard_arrow_down_rounded,
+                  color: colorScheme.inversePrimary,
+                )
               ],
             ),
           )
