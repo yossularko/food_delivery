@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/components/my_button.dart';
 import 'package:food_delivery/components/my_textfield.dart';
+import 'package:food_delivery/pages/home_page.dart';
 
 class LoginPage extends StatefulWidget {
   final void Function()? onTap;
@@ -16,13 +17,19 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
-
   final TextEditingController passController = TextEditingController();
+
+  void login() {
+    // auth here
+
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
+  }
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: colorScheme.surface,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -30,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
             Icon(
               Icons.lock_open_rounded,
               size: 100,
-              color: Theme.of(context).colorScheme.inversePrimary,
+              color: colorScheme.inversePrimary,
             ),
             const SizedBox(
               height: 25,
@@ -39,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
               "Food Delivery App",
               style: TextStyle(
                   fontSize: 16,
-                  color: Theme.of(context).colorScheme.inversePrimary),
+                  color: colorScheme.inversePrimary),
             ),
             const SizedBox(
               height: 25,
@@ -60,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(
               height: 25,
             ),
-            MyButton(text: "Sign In", onTap: () {}),
+            MyButton(text: "Sign In", onTap: login),
             const SizedBox(
               height: 25,
             ),
@@ -70,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                 Text(
                   "Not a member?",
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.inversePrimary,
+                    color: colorScheme.inversePrimary,
                   ),
                 ),
                 const SizedBox(
@@ -81,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Text(
                     "Register Now",
                     style: TextStyle(
-                        color: Theme.of(context).colorScheme.inversePrimary,
+                        color: colorScheme.inversePrimary,
                         fontWeight: FontWeight.bold),
                   ),
                 )

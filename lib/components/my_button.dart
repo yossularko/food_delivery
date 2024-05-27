@@ -12,18 +12,19 @@ class MyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(25),
         margin: const EdgeInsets.symmetric(horizontal: 25),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.secondary,
+          color: colorScheme.secondary,
           borderRadius: BorderRadius.circular(8)),
         child: Center(
           child: Text(text, style: TextStyle(
             fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.inversePrimary,
+            color: colorScheme.inversePrimary,
             fontSize: 16
           ),),
         ),
