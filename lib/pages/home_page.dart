@@ -4,6 +4,9 @@ import 'package:food_delivery/components/my_description_box.dart';
 import 'package:food_delivery/components/my_drawer.dart';
 import 'package:food_delivery/components/my_silver_app_bar.dart';
 import 'package:food_delivery/components/my_tab_bar.dart';
+import 'package:food_delivery/models/food.dart';
+import 'package:food_delivery/models/restaurant.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,13 +22,34 @@ class _HomePageState extends State<HomePage>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController =
+        TabController(length: FoodCategory.values.length, vsync: this);
   }
 
   @override
   void dispose() {
     _tabController.dispose();
     super.dispose();
+  }
+
+  List<Food> _filterMenuByCategory(FoodCategory category, List<Food> fullMenu) {
+    return fullMenu.where((food) => food.category == category).toList();
+  }
+
+  List<Widget> getFoodInThisCategory(List<Food> fullMenu) {
+    return FoodCategory.values.map((category) {
+      List<Food> categoryMenu = _filterMenuByCategory(category, fullMenu);
+
+      return ListView.builder(
+        itemCount: categoryMenu.length,
+        physics: const NeverScrollableScrollPhysics(),
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(categoryMenu[index].name),
+          );
+        },
+      );
+    }).toList();
   }
 
   @override
@@ -53,31 +77,13 @@ class _HomePageState extends State<HomePage>
                 ],
               )),
         ],
-        body: TabBarView(
-          controller: _tabController,
-          children: [
-            ListView.builder(
-              itemCount: 5,
-              itemBuilder: (context, index) => Text(
-                "Hello Home $index",
-                style: TextStyle(color: colorScheme.primary),
-              ),
-            ),
-            ListView.builder(
-              itemCount: 5,
-              itemBuilder: (context, index) => Text(
-                "Hello Settings $index",
-                style: TextStyle(color: colorScheme.primary),
-              ),
-            ),
-            ListView.builder(
-              itemCount: 5,
-              itemBuilder: (context, index) => Text(
-                "Hello Person $index",
-                style: TextStyle(color: colorScheme.primary),
-              ),
-            ),
-          ],
+        body: Consumer<Restaurant>(
+          builder: (context, value, child) {
+            return TabBarView(
+              controller: _tabController,
+              children: getFoodInThisCategory(value.menu),
+            );
+          },
         ),
       ),
     );
